@@ -1,1 +1,5 @@
-from practico_01 import Generadores
+
+
+
+if __name__ == "__main__":
+    pass

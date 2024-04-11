@@ -51,6 +51,10 @@ class Generadores:
                 factores.append(n)
             return factores
 
+        # c distinto de 0
+        if c == 0:
+            return False
+
         # El maximo comun divisor entre c y m es 1
         if mcd(c, m) != 1:
             return False
