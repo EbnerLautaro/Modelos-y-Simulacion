@@ -49,6 +49,3 @@ if __name__ == "__main__":
             wins = wins+1 if jugar() else wins 
         print(f"n={n:<12} wins={wins:<12} ratio={wins/n}")
     
-
-
-    
