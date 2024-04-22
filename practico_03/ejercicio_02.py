@@ -1,9 +1,5 @@
 import random
 
-
-
-
-
 # para generar una variable aleatoria entere 0 y 1, lo que hacemos es llamar a random.random
 
 

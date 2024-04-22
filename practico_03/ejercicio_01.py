@@ -24,7 +24,7 @@ class Generadores:
         """
         return ((a*y) + c) % m
 
-    def congruencial_lineal_mixto(self, a: int, y: int, m: int):
+    def congruencial_lineal_multiplicativo(self, a: int, y: int, m: int):
         """
         Dada una semilla, retorna ((a*y)) % M
         """
