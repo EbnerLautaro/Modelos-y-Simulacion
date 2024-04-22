@@ -18,7 +18,7 @@ class Generadores:
         """
         return (u**2 // 100) % 10_000
 
-    def congruencial_lineal(self, a: int, y: int, c: int, m: int):
+    def congruencial_lineal_mixto(self, a: int, y: int, c: int, m: int):
         """
         Dada una semilla, retorna ((a*y) + c) % M
         """
@@ -28,7 +28,7 @@ class Generadores:
         """
         Dada una semilla, retorna ((a*y)) % M
         """
-        return self.congruencial_lineal(a, y, 0, m)
+        return self.congruencial_lineal_mixto(a, y, 0, m)
 
     def is_congruencial_periodo_maximo(self, a: int, c: int, m: int) -> bool:
         """
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         secuencia = []
         x = i
         for _ in range(10):
-            x = gen.congruencial_lineal(x, 5, 4, 2**5)
+            x = gen.congruencial_lineal_mixto(x, 5, 4, 2**5)
             secuencia.append(x)
         print(f"{x}: {secuencia}")
 
