@@ -30,3 +30,14 @@ class GeneradorVariableDiscreta:
 
         # te juro que nunca no retorna :)
 
+    @staticmethod
+    def urna(probs: dict[any, float], k:int) -> any:
+        
+        array: list[any] = []
+        for key, value in probs.items():
+            for _ in range(int(value*k)):
+                array.append(key)
+
+        return array[int(random.random()*k)]
+
+        
