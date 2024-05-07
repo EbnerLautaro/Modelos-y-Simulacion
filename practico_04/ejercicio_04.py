@@ -1,95 +1,41 @@
-import random
-import collections
+import time
 
-class GeneradorVariableDiscreta:
-    """
-    Generador de variables discretas a travezde distintos metodos
-    """
-
-    @staticmethod
-    def transformada_inversa(probs: dict[any, float]) -> int:
-        """
-        Generador de variables aleatorias discretas a travez del metodo 
-        de la transformada inversa.
-
-        Parametros: 
-            - probs: es una diccionario donde cada par key, value indica:
-                - key: valor de la variable discreta
-                - probabilidad del valor de la variable discreta 
-        """
-        assert sum(probs.values()) == 1.0, "La suma de las probabilidades debe ser 1.0"
-
-        sorted_probs = sorted(probs.items(), key=lambda elem: elem[1])
-        sorted_probs = collections.OrderedDict(sorted_probs)
-
-        _sum = 0
-        x = random.random()
-        for key in sorted_probs.keys():
-            _sum += sorted_probs.get(key)
-            sorted_probs.update({key: _sum})
-
-            if x <= _sum:
-                return key
-        # te juro que nunca no retorna :)
-        raise ValueError
-
-    @staticmethod
-    def urna(probs: dict[any, float], k:int) -> any:
-        
-        array: list[any] = []
-        for key, value in probs.items():
-            for _ in range(int(value*k)):
-                array.append(key)
-
-        return array[int(random.random()*k)]
-
-    def urna_smart(self, probs: dict[any, float]) -> any:
-        k = 0
-        for _, value in probs.items():
-            k = max(k, len(str(value).split(".")[1]))
-        k = 10**k
-
-        return self.urna(probs=probs, k=k)
-
-    def aceptacion_rachazo(self, probs: dict[any, float]) -> any:
-        
-        while True:
-
-            pos_y = random.randint(1, len(probs.keys()))
-            y = list(probs.keys())[pos_y-1]
-            p_y = probs.get(y)
-            u = random.random()
-            if u < p_y:
-                return y
-
-
-def test_functions(probs: dict[any, float], funcs: list, n_sim:int=10**6):
-    
-    for f in funcs:
-        probs_count = {key: 0 for key in probs.keys()}
-
-        for _ in range(n_sim):
-            var = f(probs)
-            probs_count.update({var: (probs_count.get(var)+1)})
-
-        probs_count = {key: (value/n_sim) for key, value in probs_count.items()}
-
-        print(f"function: {f.__name__}")
-        print(f"actual   : {probs}")
-        print(f"simulated: {probs_count}")
-        print("=========================================================")
-
+from auxiliares import GeneradorVariableDiscreta
 
 if __name__ == "__main__":
-    pass
+    # Implemente tres métodos para generar una variable X que toma los valores del 1 al 10, con
+    # probabilidades p1 = 0,11, p2 = 0,14, p3 = 0,09, p4 = 0,08, p5 = 0,12, p6 = 0,10, p7 = 0,09, p8 =
+    # 0,07, p9 = 0,11, p10 = 0,09 usando:
+    # a) Método de rechazo con una uniforme discreta.
+    # b) Transformada inversa.
+    # c) Método de la urna: utilizar un arreglo A de tamaño 100 donde cada valor i está en exactamente pi ∗ 100
+    # posiciones. El método debe devolver A[k] con probabilidad 0,01. ¿Por qué funciona?
+    # Compare la eficiencia de los tres algoritmos realizando 10000 simulaciones.
 
+    probabilities = {
+        "x1": 0.11,
+        "x2": 0.14,
+        "x3": 0.09,
+        "x4": 0.08,
+        "x5": 0.12,
+        "x6": 0.10,
+        "x7": 0.09,
+        "x8": 0.07,
+        "x9": 0.11,
+        "x10": 0.09,
+    }
 
+    def time_simulation(probabilities, function, n_sim) -> float:
+        start = time.time()
+        for _ in range(n_sim):
+            function(probabilities)
+        end = time.time()
+        return end - start
 
+    gen = GeneradorVariableDiscreta()
 
-
-
-
-
-
+    for function in [gen.aceptacion_rachazo, gen.transformada_inversa, gen.urna_smart]:
+        print (f"{function.__name__}")
+        print (f"\ttime: {time_simulation(probabilities=probabilities, function=function, n_sim=10000)}")
 
 
