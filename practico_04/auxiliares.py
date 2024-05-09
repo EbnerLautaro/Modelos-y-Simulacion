@@ -1,6 +1,7 @@
 import random
 import collections
 
+
 def test_functions(probs: dict[any, float], funcs: list, n_sim: int = 10**6):
 
     for func in funcs:
@@ -22,6 +23,7 @@ class GeneradorVariableDiscreta:
     """
     Generador de variables discretas a travez de distintos metodos
     """
+
     @staticmethod
     def transformada_inversa(probs: dict[any, float]) -> int:
         """
@@ -32,6 +34,9 @@ class GeneradorVariableDiscreta:
             - probs: es una diccionario donde cada par key, value indica:
                 - key: valor de la variable discreta
                 - probabilidad del valor de la variable discreta
+
+        Considerar:
+            - no se verifica que la sumatoria de las probabilidades sea 1
         """
 
         sorted_probs = sorted(probs.items(), key=lambda elem: elem[1])
@@ -66,7 +71,7 @@ class GeneradorVariableDiscreta:
         """
         Generador de variables aleatorias discretas a travez del metodo
         de la urna.
-        Se determina el valor de k (tamaño de array de forma automatica, 
+        Se determina el valor de k (tamaño de array de forma automatica,
         no de la forma mas eficiente)
         """
         k = 0
@@ -78,7 +83,7 @@ class GeneradorVariableDiscreta:
 
     def aceptacion_rachazo(self, probs: dict[any, float]) -> any:
         """
-        Generador de variables aleatorias discretas a travez del metodo de aceptacion 
+        Generador de variables aleatorias discretas a travez del metodo de aceptacion
         y rechazo, la variable auxiliar se genera a travez de random.randint()
         """
         while True:
@@ -91,19 +96,18 @@ class GeneradorVariableDiscreta:
                 return y
 
     @staticmethod
-    def distribucion_binomial(n: int, p: float)-> int:
+    def distribucion_binomial(n: int, p: float) -> int:
         """
         Si consideramos un experimento que consiste en n ensayos independientes, cada uno con probabilidad
         p de exito, entonces el numero de exitos tiene una distribucion binomial de parametros n y p
         """
-        acum = (1-p)**n
+        acum = (1 - p) ** n
         f = acum
         n_exitos = 0
         x = random.random()
         while x >= f:
-            acum *=  p / (1-p) * (n-n_exitos) / (n_exitos+1)
+            acum *= p / (1 - p) * (n - n_exitos) / (n_exitos + 1)
             f += acum
             n_exitos += 1
 
         return n_exitos
-    
