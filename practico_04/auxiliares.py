@@ -1,5 +1,4 @@
 import random
-import collections
 
 
 def test_functions(probs: dict[any, float], funcs: list, n_sim: int = 10**6):
@@ -11,7 +10,8 @@ def test_functions(probs: dict[any, float], funcs: list, n_sim: int = 10**6):
             var = func(probs)
             probs_count.update({var: (probs_count.get(var) + 1)})
 
-        probs_count = {key: (value / n_sim) for key, value in probs_count.items()}
+        probs_count = {key: (value / n_sim)
+                       for key, value in probs_count.items()}
 
         print(f"function: {func.__name__}")
         print(f"actual   : {probs}")
@@ -20,38 +20,30 @@ def test_functions(probs: dict[any, float], funcs: list, n_sim: int = 10**6):
 
 
 class GeneradorVariableDiscreta:
-    """
-    Generador de variables discretas a travez de distintos metodos
-    """
 
     @staticmethod
-    def transformada_inversa(probs: dict[any, float]) -> int:
+    def transformada_inversa(probabilities: list[tuple[any, int]], optimize: bool = True):
         """
         Generador de variables aleatorias discretas a travez del metodo
         de la transformada inversa.
 
-        Parametros:
-            - probs: es una diccionario donde cada par key, value indica:
-                - key: valor de la variable discreta
-                - probabilidad del valor de la variable discreta
+        Params    
+            - probabilities: cada elemento tiene la forma: (valor, probabilidad)
+            - optimize: 
 
         Considerar:
             - no se verifica que la sumatoria de las probabilidades sea 1
         """
+        if optimize:
+            probabilities = sorted(probabilities, key=lambda elem: elem[1])
 
-        sorted_probs = sorted(probs.items(), key=lambda elem: elem[1])
-        sorted_probs = collections.OrderedDict(sorted_probs)
-
-        _sum = 0
-        x = random.random()
-        for key in sorted_probs.keys():
-            _sum += sorted_probs.get(key)
-            sorted_probs.update({key: _sum})
-
-            if x <= _sum:
-                return key
-        # te juro que nunca no retorna :)
-        raise ValueError
+        i = 0
+        u = random.random()
+        acumulador = probabilities[0][1]
+        while u >= acumulador:
+            i += 1
+            acumulador += probabilities[i][1]
+        return probabilities[i][0]
 
     @staticmethod
     def urna(probs: dict[any, float], k: int) -> any:
@@ -93,6 +85,36 @@ class GeneradorVariableDiscreta:
             p_y = probs.get(y)
             u = random.random()
             if u < p_y:
+                return y
+
+    @staticmethod
+    def aceptacion_rechazo_2(
+        probabilities: list[tuple[any, int]],
+        y_probabilities: list[tuple[any, int]],
+        var_aux
+    ):
+        """
+        Parametros:
+            - probabilities: pares (valor, p(valor)) de la variable a generar
+            - y_probabilities: pares (valor, p(valor)) de la variale auxiliar
+            - var_aux: funcion que genera una variable con valores y probabilidades dadas por y_probabilities
+        """
+        filtered_probs_y = []
+        flattened_p = [elem[0] for elem in probabilities]
+        for elem in y_probabilities:
+            if elem[0] in flattened_p:
+                filtered_probs_y.append(elem)
+
+        max_p = max(probabilities, key=lambda elem: elem[1])
+        max_py = min(filtered_probs_y, key=lambda elem: elem[1])
+
+        c = int(max_p / max_py)
+        assert c > 1
+
+        while True:
+            y = var_aux()
+            u = random.random()
+            if u < (probabilities[y][1] / (c * y_probabilities[y][1])):
                 return y
 
     @staticmethod

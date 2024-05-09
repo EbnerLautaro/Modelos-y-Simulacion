@@ -76,7 +76,6 @@ if __name__ == "__main__":
         fact = math.factorial  # para que sea mas legible
         return (fact(n) / (fact(i) * fact(n - i))) * (p**i) * ((1 - p) ** (n - i))
 
-    print("Probabilidades teoricas:")
-    probs = [prob(i, 10) % 0.1000 for i in range(10)]
-    formatted = ", ".join(["{:.5f}".format(number) for number in probs])
+    print("Probabilidades teoricas")
+    formatted = ", ".join([f"{prob(i, 10):.5f}" for i in range(10)])
     print(f"\t[{formatted}]")
