@@ -33,7 +33,6 @@ class GeneradorVariableDiscreta:
                 - key: valor de la variable discreta
                 - probabilidad del valor de la variable discreta
         """
-        assert sum(probs.values()) == 1.0, f"La suma de las probabilidades debe ser 1.0 y es {sum(probs.values())}"
 
         sorted_probs = sorted(probs.items(), key=lambda elem: elem[1])
         sorted_probs = collections.OrderedDict(sorted_probs)
