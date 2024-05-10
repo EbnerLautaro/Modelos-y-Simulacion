@@ -107,7 +107,6 @@ class GeneradorVariableDiscreta:
 
         max_p = max(probabilities, key=lambda elem: elem[1])
         max_py = min(filtered_probs_y, key=lambda elem: elem[1])
-
         c = int(max_p / max_py)
         assert c > 1
 
