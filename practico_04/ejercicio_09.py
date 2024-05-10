@@ -36,6 +36,8 @@ if __name__ == "__main__":
     n_sim = 100_000
     for p in [0.8, 0.2]:
         print("".center(100, "="))
+        print(f"Valor esperado analitico {1/p}")
+
         for func in [transformada_inversa, ensayos]:
             print(f"- {func.__name__}({p})")
             start = time.time()

@@ -39,15 +39,16 @@ if __name__ == "__main__":
 
     print("transformada inversa")
     start = time.time()
+    sumatoria = 0
     for _ in range(10_000):
-        transformada_inversa(probs=probs)
+        sumatoria += transformada_inversa(probs=probs)
     print(f"\ttime: {time.time() - start}")
+    print(f"\tesperanza {sumatoria/10_000}")
 
     def px(x: int) -> float:
         """
         Retorna la probabilidad de que la variable X tome cada valor
         """
-
         for elem in [(0, 0.15), (1, 0.2), (2, 0.10), (3, 0.35), (4, 0.2)]:
             if x == elem[0]:
                 return elem[1]
@@ -85,7 +86,9 @@ if __name__ == "__main__":
     c = math.ceil(max(px(i)/py(i) for i in [elem[0] for elem in probs]))
 
     print("aceptacion_rechazo")
+    sumatoria = 0
     start = time.time()
     for i in range(10_000):
-        aceptacion_rechazo(px=px, py=py, c=c, sim_y=sim_y)
+        sumatoria += aceptacion_rechazo(px=px, py=py, c=c, sim_y=sim_y)
     print(f"\ttime {time.time()-start}")
+    print(f"\tesperanza {sumatoria/10_000}")
