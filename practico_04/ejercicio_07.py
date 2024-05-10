@@ -7,9 +7,7 @@ def poisson(lamda):
     u = random.random()
     i = 0
     p = math.exp(-lamda)
-
     acumulada = p
-
     while u >= acumulada:
         i += 1
         p *= lamda / i
