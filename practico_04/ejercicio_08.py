@@ -33,7 +33,6 @@ def transformada_inversa(lamda, k):
 
 
 def aceptacion_rechazo(px, py, sim_y, c):
-
     while True:
         y = sim_y()
         u = random.random()
@@ -50,7 +49,7 @@ if __name__ == "__main__":
     def p_y(y):
         return (math.exp(-LAMDA) * (LAMDA**y)) / math.factorial(y)
 
-    c = max(p_x(i)/p_y(i) for i in range(K))
+    c = max(p_x(i)/p_y(i) for i in range(K+1))
 
     def poisson():
         u = random.random()
@@ -74,5 +73,6 @@ if __name__ == "__main__":
         cont_ar += int(sim_ar > 2)
 
     print("P(X>2):")
+    print(f"\tresultado analitico:  {1- (p_y(0) + p_y(1)+ p_y(2))}")
     print(f"\ttransformada_inversa: {cont_ti/n_sim} ")
     print(f"\taceptacion_rechazo:   {cont_ar/n_sim}")
