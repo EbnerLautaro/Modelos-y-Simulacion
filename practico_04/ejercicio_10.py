@@ -21,5 +21,4 @@ if __name__ == "__main__":
     sumatoria = 0
     for _ in range(n_sim):
         sumatoria += transformada_inversa()
-
     print(f"Esperanza: {sumatoria/n_sim}")
