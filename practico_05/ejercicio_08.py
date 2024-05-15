@@ -1,5 +1,6 @@
 import math
 import random
+import time
 
 
 def suma_uniformes():
@@ -42,18 +43,18 @@ def transformada_inversa():
 
 if __name__ == "__main__":
 
-    print("ejercicio a".center(100, "-"))
+    print("ejercicio b".center(100, "-"))
+
     n_sim = 10_000
-    suma_ar = 0
-    suma_ti = 0
-    suma_su = 0
 
-    c = 2
-    for _ in range(n_sim):
-        suma_ar += aceptacion_rechazo(sim_y=sim_y, px=p_x, py=p_y, c=c)
-        suma_ti += transformada_inversa()
-        suma_su += suma_uniformes()
+    for func in [lambda: aceptacion_rechazo(sim_y=sim_y, px=p_x, py=p_y, c=2), transformada_inversa, suma_uniformes]:
+        suma = 0
+        start = time.time()
+        for _ in range(n_sim):
+            suma += func()
+        print(f"{func.__name__}:")
+        print(f"\t esperanza:   {suma/n_sim}:")
+        print(f"\t time:        {time.time() - start}:")
 
-    print(f"esperanza acetacion_rechazo:    {suma_ar/n_sim}")
-    print(f"esperanza transformada_inversa: {suma_ti/n_sim}")
-    print(f"esperanza suma uniformes:       {suma_su/n_sim}")
+    print("¿Para qué valor x0 se cumple que P(X > x0) = 0.125?")
+    print(f"\t x0 =         {2 - (math.sqrt(2)*math.sqrt(1-0.875))}")
