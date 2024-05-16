@@ -34,10 +34,10 @@ if __name__ == "__main__":
     # print(f"Autobuses:     {cant_autobuses}")
     # print(f"Aficionados:   {cant_aficionados}")
 
-    _, llegadas = proceso_poisson(5, 1)
-    llegadas_aficionados = []
-    for t in llegadas:
-        llegadas_aficionados.append((round(t, 4), cap_autobus()))
+    n_sim = 10_000
+    suma = 0
+    for _ in range(n_sim):
+        cantidad, llegadas = proceso_poisson(5, 1)
+        suma += sum(cap_autobus() for _ in range(cantidad))
 
-    print(llegadas_aficionados)
-    print(f"llegadas_totales: {sum(elem[1] for elem in llegadas_aficionados)}")
+    print(f"esperanza: \t{suma/n_sim}")
