@@ -18,7 +18,7 @@ def test_ejercicio2(u):
 
 
 if __name__ == "__main__":
-    # para probar el punto a descomentar!
+    # para probar el ejercicio 2a descomentar!
     # print(f"u=0.2 => x={test_ejercicio2(0.2)}")
     # print(f"u=0.5 => x={test_ejercicio2(0.5)}")
     # print(f"u=0.8 => x={test_ejercicio2(0.8)}")
