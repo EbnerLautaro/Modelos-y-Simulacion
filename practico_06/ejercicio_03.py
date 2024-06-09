@@ -1,4 +1,5 @@
-import math, random
+import math
+import random
 from typing import Callable
 
 F = ":.4f"
@@ -14,7 +15,6 @@ def fun_ii(x: float) -> float:
 
 def func_a_b(x, func, a, b):
     assert 0 <= x <= 1
-
     return func(a + ((b - a) * x)) * (b - a)
 
 
@@ -42,7 +42,7 @@ def monte_carlo(func, n_sim):
 
     ic = math.sqrt(S_sq / n)
 
-    return media, S_sq, ic
+    return media, math.sqrt(S_sq), ic
 
 
 def monte_carlo_d(func, d_threshold, min_sim):
@@ -64,7 +64,11 @@ def monte_carlo_d(func, d_threshold, min_sim):
         n += 1
         ic = math.sqrt(S_sq / n)
 
-    return media, S_sq, ic, n
+        if n == 100:
+            print(media, math.sqrt(S_sq / n))
+            break
+
+    return media, math.sqrt(S_sq), ic, n
 
 
 if __name__ == "__main__":
@@ -73,7 +77,7 @@ if __name__ == "__main__":
     print(d)
     print(" ejercicio i ".center(100, "="))
 
-    f = lambda x: func_a_b(x=x, func=fun_i, a=math.pi, b=2 * math.pi)
+    def f(x): return func_a_b(x=x, func=fun_i, a=math.pi, b=2 * math.pi)
 
     for n in [1000, 5_000, 7_000]:
         print(f"n_sim\t{n}")
@@ -83,7 +87,7 @@ if __name__ == "__main__":
         )
         print(f"\tmedia {mu:F}")
         print(f"\tvar   {var:F}")
-        print(f"\tic    [{mu - ic:F}, {mu + ic:F}]\tdif: {ic:F}")
+        print(f"\tic    [{mu - 1.96*ic:F}, {mu + 1.96*ic:F}]\tdif: {ic:F}")
 
     mu, var, ic, n = monte_carlo_d(
         func=f,
@@ -93,11 +97,11 @@ if __name__ == "__main__":
     print(f"n_sim\t{n}")
     print(f"\tmedia {mu:F}")
     print(f"\tvar   {var:F}")
-    print(f"\tic    [{mu - ic:F}, {mu + ic:F}]\tdif: {ic:F}")
+    print(f"\tic    [{mu - 1.96*ic:F}, {mu + 1.96*ic:F}]\tdif: {ic:F}")
 
     print(" ejercicio ii ".center(100, "="))
 
-    f = lambda x: func_0_inf(x=x, func=fun_ii)
+    def f(x): return func_0_inf(x=x, func=fun_ii)
 
     for n in [1000, 5_000, 7_000]:
         print(f"n_sim\t{n}")
@@ -107,7 +111,7 @@ if __name__ == "__main__":
         )
         print(f"\tmedia {mu:F}")
         print(f"\tvar   {var:F}")
-        print(f"\tic    [{mu - ic:F}, {mu + ic:F}]\tdif: {ic:F}")
+        print(f"\tic    [{mu - 1.96*ic:F}, {mu + 1.96*ic:F}]\tdif: {ic:F}")
 
     mu, var, ic, n = monte_carlo_d(
         func=f,
@@ -117,4 +121,4 @@ if __name__ == "__main__":
     print(f"n_sim\t{n}")
     print(f"\tmedia {mu:F}")
     print(f"\tvar   {var:F}")
-    print(f"\tic    [{mu - ic:F}, {mu + ic:F}]\tdif: {ic:F}")
+    print(f"\tic    [{mu - 1.96*ic:F}, {mu + 1.96*ic:F}]\tdif: {ic:F}")

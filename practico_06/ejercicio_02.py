@@ -37,7 +37,7 @@ def fun_ii(x):
     def f2(w):
         return w**2 * math.exp(-((w) ** 2))
 
-    return (f1(x) + f2(x)) / 2
+    return (f1(x) + f2(x))
 
 
 def monte_carlo_0_inf(func: Callable, max_sim: int, n_min: int, d_threshold: float):
@@ -49,7 +49,8 @@ def monte_carlo_0_inf(func: Callable, max_sim: int, n_min: int, d_threshold: flo
     n_values = n_min
     while n_values <= max_sim:
 
-        values_to_insert = [h(random.random()) for _ in range(n_values - len(values))]
+        values_to_insert = [h(random.random())
+                            for _ in range(n_values - len(values))]
         values.extend(values_to_insert)
 
         mean = sum(values) / len(values)
