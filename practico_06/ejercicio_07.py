@@ -12,7 +12,6 @@ def estimador_T(N_list: list[int], N: int, p_list: list[float]):
     T = 0
     for ni, pi in zip(N_list, p_list):
         T += pow((ni - (N*pi)), 2)/(N*pi)
-        print(pow((ni - (N*pi)), 2)/(N*pi))
     return T
 
 
@@ -67,6 +66,8 @@ def simulacion_p_valor_gen(N, probs, T, n_sim):
 
 
 if __name__ == "__main__":
+
+    print(estimador_T([141, 291, 132], 564, [.25, .5, .25]))
 
     print(f"p valor de Pearson      {chi2.sf(x=0.8616, df=2)}")
 
