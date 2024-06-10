@@ -5,11 +5,13 @@ import numpy as np
 
 
 def estadistico_d(muestra, F):
+    m = muestra
+    muestra.sort()
     d = 0
-    n = len(muestra)
+    n = len(m)
     for i in range(1, n+1):
-        elem = muestra[i-1]
-        d = max(d, (i/n)*F(elem), F(elem)-((i-1)/n))
+        elem = m[i-1]
+        d = max(d, (i/n)-F(elem), F(elem)-((i-1)/n))
     return d
 
 

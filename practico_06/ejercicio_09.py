@@ -10,7 +10,6 @@ def estadistico_d(F, m):
     d = 0
     n = len(muestra)
     for i in range(1, len(muestra)+1):
-
         x = muestra[i-1]
         d = max(d, ((i)/n)-F(x), F(x)-((i-1)/n))
 
