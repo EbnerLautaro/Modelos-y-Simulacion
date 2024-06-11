@@ -48,13 +48,11 @@ if __name__ == "__main__":
     # a una distribución binomial con parámetros (n = 8, p), donde p no se conoce
 
     muestra = [6, 7, 3, 4, 7, 3, 7, 2, 6, 3, 7, 8, 2, 1, 3, 5, 8, 7]
-    muestra.sort()
-    print(muestra)
     n = 8
 
     # aproximamos el parametro p, como E(X)=np, tenemos que p=E(X)/n
     p_aprox = media_muestral(m=muestra)/n
-
+    print(p_aprox)
     # luego, utilizamos este parametro para el test de Pearson
 
     def p_x(x):
@@ -64,7 +62,7 @@ if __name__ == "__main__":
 
     for elem in muestra:
         ocurrencias[elem] += 1
-
+    print(ocurrencias)
     t = estimador_T(ocurrencias=ocurrencias, N=sum(
         ocurrencias), p_list=[p_x(i) for i in range(n+1)])
 

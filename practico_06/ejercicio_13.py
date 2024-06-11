@@ -38,6 +38,25 @@ def p_valor_smirnov(d, N_sample,  n_sim):
     return p_valor/n_sim
 
 
+def p_valor_smirnov_exp(d, N_sample,  n_sim):
+
+    def F_x(x):
+        assert 0 <= x <= 1
+        return x
+
+    p_valor = 0
+    for _ in range(n_sim):
+
+        uniformes = np.random.exponential(1, N_sample)
+        uniformes.sort()
+        d_j = estadistico_d(uniformes, lambda x: 1-math.exp(-x))
+
+        if d_j >= d:
+            p_valor += 1
+
+    return p_valor/n_sim
+
+
 if __name__ == "__main__":
     # Generar los valores correspondientes a 30 variables aleatorias exponenciales
     # independientes, cada una con media 1. Luego, en base al estadístico de prueba
@@ -56,3 +75,6 @@ if __name__ == "__main__":
     p_valor = p_valor_smirnov(d=d_stat, N_sample=N_sample, n_sim=10_000)
 
     print(f"estiamcion p-valor      {p_valor}")
+    p_valor = p_valor_smirnov_exp(d=d_stat, N_sample=N_sample, n_sim=10_000)
+
+    print(f"estiamcion p-valor exp  {p_valor}")

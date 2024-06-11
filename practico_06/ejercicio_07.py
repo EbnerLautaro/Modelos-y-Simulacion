@@ -67,7 +67,8 @@ def simulacion_p_valor_gen(N, probs, T, n_sim):
 
 if __name__ == "__main__":
 
-    print(estimador_T([141, 291, 132], 564, [.25, .5, .25]))
+    T_stat = estimador_T([141, 291, 132], 564, [.25, .5, .25])
+    print(f"estadistico t           {T_stat}")
 
     print(f"p valor de Pearson      {chi2.sf(x=0.8616, df=2)}")
 
@@ -77,5 +78,4 @@ if __name__ == "__main__":
         N=564, probs=[.25, .5, .25], T=0.8616, n_sim=100_000,
     )
 
-    print(
-        f"p valor simulacion2       {p_valor}")
+    print(f"p valor simulacion_gen  {p_valor}")

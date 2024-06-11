@@ -27,9 +27,9 @@ def estimacion_p_valor(n, d, n_sim):
 
     p_valor = 0
     for _ in range(n_sim):
-        uniformes = np.random.uniform(0, 1, n)
+        uniformes = np.random.exponential(50, n)
         uniformes.sort()
-        d_j = estadistico_d(F_x, uniformes)
+        d_j = estadistico_d(lambda x: 1-math.exp(-x*(1/50)), uniformes)
         if d_j > d:
             p_valor += 1
 
